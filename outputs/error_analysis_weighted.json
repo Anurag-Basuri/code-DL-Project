@@ -1,0 +1,51 @@
+[
+  {
+    "word": "app",
+    "true": "EN",
+    "pred": "HI",
+    "confidence": 0.989,
+    "context": "bhai ye app bahut slow chal raha hai"
+  },
+  {
+    "word": "subah",
+    "true": "HI",
+    "pred": "NE",
+    "confidence": 0.817,
+    "context": "I will call you kal subah"
+  },
+  {
+    "word": "Zomato",
+    "true": "NE",
+    "pred": "HI",
+    "confidence": 0.639,
+    "context": "Zomato se khana order kiya par abhi tak nahi aaya"
+  },
+  {
+    "word": "Saturday",
+    "true": "EN",
+    "pred": "NE",
+    "confidence": 0.93,
+    "context": "Mohit bhai ka birthday party Saturday ko hai"
+  },
+  {
+    "word": "Maps",
+    "true": "NE",
+    "pred": "EN",
+    "confidence": 0.618,
+    "context": "Google Maps pe location share karo"
+  },
+  {
+    "word": "main",
+    "true": "HI",
+    "pred": "EN",
+    "confidence": 0.547,
+    "context": "thoda wait karo , main check karta hoon"
+  },
+  {
+    "word": "subah",
+    "true": "HI",
+    "pred": "NE",
+    "confidence": 0.736,
+    "context": "subah se kuch khaya nahi , bahut bhookh lagi hai"
+  }
+]

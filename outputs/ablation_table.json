@@ -1,0 +1,65 @@
+[
+  {
+    "loss": "Cross-Entropy",
+    "eval_set": "LinCE Val",
+    "accuracy": 0.9687821612349914,
+    "f1_macro": 0.9428343660396674,
+    "f1_weighted": 0.9688782426396464
+  },
+  {
+    "loss": "Cross-Entropy",
+    "eval_set": "LinCE Held-out Test",
+    "accuracy": 0.9610483787423599,
+    "f1_macro": 0.9347167123785503,
+    "f1_weighted": 0.9610193060386872
+  },
+  {
+    "loss": "Cross-Entropy",
+    "eval_set": "Custom Conversational",
+    "accuracy": 0.9823008849557522,
+    "f1_macro": 0.9520836368533072,
+    "f1_weighted": 0.9824579483443314
+  },
+  {
+    "loss": "Weighted CE",
+    "eval_set": "LinCE Val",
+    "accuracy": 0.9663807890222984,
+    "f1_macro": 0.9400341523462517,
+    "f1_weighted": 0.9669320907541384
+  },
+  {
+    "loss": "Weighted CE",
+    "eval_set": "LinCE Held-out Test",
+    "accuracy": 0.9595980524189371,
+    "f1_macro": 0.9339429619119786,
+    "f1_weighted": 0.9598677524772073
+  },
+  {
+    "loss": "Weighted CE",
+    "eval_set": "Custom Conversational",
+    "accuracy": 0.9845132743362832,
+    "f1_macro": 0.9535207294643226,
+    "f1_weighted": 0.9846814692238972
+  },
+  {
+    "loss": "Focal Loss (\u03b3=2)",
+    "eval_set": "LinCE Val",
+    "accuracy": 0.9685763293310463,
+    "f1_macro": 0.942659503859857,
+    "f1_weighted": 0.9686855814310581
+  },
+  {
+    "loss": "Focal Loss (\u03b3=2)",
+    "eval_set": "LinCE Held-out Test",
+    "accuracy": 0.9630166787527193,
+    "f1_macro": 0.9373126646816154,
+    "f1_weighted": 0.9629501554682821
+  },
+  {
+    "loss": "Focal Loss (\u03b3=2)",
+    "eval_set": "Custom Conversational",
+    "accuracy": 0.9800884955752213,
+    "f1_macro": 0.9450639947116379,
+    "f1_weighted": 0.980467650419078
+  }
+]

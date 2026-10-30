@@ -1,0 +1,65 @@
+[
+  {
+    "word": "app",
+    "true": "EN",
+    "pred": "HI",
+    "confidence": 0.898,
+    "context": "bhai ye app bahut slow chal raha hai"
+  },
+  {
+    "word": "kal",
+    "true": "HI",
+    "pred": "NE",
+    "confidence": 0.5,
+    "context": "I will call you kal subah"
+  },
+  {
+    "word": "subah",
+    "true": "HI",
+    "pred": "NE",
+    "confidence": 0.591,
+    "context": "I will call you kal subah"
+  },
+  {
+    "word": "Zomato",
+    "true": "NE",
+    "pred": "HI",
+    "confidence": 0.469,
+    "context": "Zomato se khana order kiya par abhi tak nahi aaya"
+  },
+  {
+    "word": "Saturday",
+    "true": "EN",
+    "pred": "NE",
+    "confidence": 0.685,
+    "context": "Mohit bhai ka birthday party Saturday ko hai"
+  },
+  {
+    "word": "Maps",
+    "true": "NE",
+    "pred": "EN",
+    "confidence": 0.717,
+    "context": "Google Maps pe location share karo"
+  },
+  {
+    "word": "main",
+    "true": "HI",
+    "pred": "EN",
+    "confidence": 0.735,
+    "context": "thoda wait karo , main check karta hoon"
+  },
+  {
+    "word": "sale",
+    "true": "EN",
+    "pred": "HI",
+    "confidence": 0.573,
+    "context": "Flipkart pe sale kab start hogi ?"
+  },
+  {
+    "word": "subah",
+    "true": "HI",
+    "pred": "NE",
+    "confidence": 0.561,
+    "context": "subah se kuch khaya nahi , bahut bhookh lagi hai"
+  }
+]

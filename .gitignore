@@ -1,15 +1,64 @@
-/AnuragBasuri12306150.pdf
-/app.py
-/custom_test_hinglish.conll
-/final_project_report.md
-/generate_report.py
-/hinglish_lid_colab.py
-/Hinglish_LID_IEEE_Report.docx
-/Hinglish_LID_Report.docx
-/manas_report.pdf
-/outputs
-/runs
-/server.py
-/static
-/train.py
-/__pycache__
+# ==============================================================================
+# Hinglish Language Identification (LID) - .gitignore
+# ==============================================================================
+
+# Python cache & build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Large Model Checkpoints & Weights (> 100 MB GitHub limit)
+# Note: Full trained checkpoints (~12 GB) should be stored in cloud/external storage
+runs/
+checkpoints/
+*.pt
+*.bin
+*.safetensors
+*.onnx
+*.h5
+
+# OS & Editor generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Antigravity & Agent workspace artifacts
+.agents/
+.system_generated/
+.user_uploaded/
+
+# Logs & Temporary files
+*.log
+*.tmp
+*.bak

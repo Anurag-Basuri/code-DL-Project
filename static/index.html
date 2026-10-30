@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hinglish Language Identifier</title>
+  <meta name="description" content="Clean and simple Hindi-English code-switching language identifier." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="page-container">
+
+    <!-- Top Header -->
+    <header class="site-header">
+      <div class="header-left">
+        <h1 class="site-title">Hinglish Language Identifier</h1>
+        <p class="site-desc">Detect Hindi, English, and mixed language in text</p>
+      </div>
+      <div class="header-right">
+        <div class="system-status" id="system-status">
+          <span class="status-dot"></span>
+          <span id="status-label">Ready</span>
+        </div>
+        <div class="select-container">
+          <label for="model-selector" class="select-label">Model:</label>
+          <select id="model-selector" class="clean-select">
+            <option value="weighted" selected>Weighted CE (98.5% Acc)</option>
+            <option value="focal">Focal Loss (96.3% Acc)</option>
+            <option value="ce">Standard CE (96.9% Acc)</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mode Switcher: Single vs Batch -->
+    <nav class="mode-nav">
+      <button id="tab-single" class="mode-tab active" type="button">
+        <span class="tab-icon">✍️</span>
+        <span class="tab-text">Single Sentence</span>
+      </button>
+      <button id="tab-batch" class="mode-tab" type="button">
+        <span class="tab-icon">📑</span>
+        <span class="tab-text">Batch Analysis</span>
+      </button>
+    </nav>
+
+    <!-- ===================================================================== -->
+    <!-- 1. SINGLE SENTENCE INTERFACE                                          -->
+    <!-- ===================================================================== -->
+    <main id="view-single" class="mode-view">
+      <!-- Input Card -->
+      <section class="card input-card">
+        <div class="card-header">
+          <label for="text-input" class="card-label">Enter Sentence</label>
+          <span class="char-counter" id="char-count">0 words</span>
+        </div>
+
+        <textarea
+          id="text-input"
+          class="text-input"
+          rows="3"
+          placeholder="Type or paste a sentence here... (e.g. bhai ye app bahut slow chal raha hai please check karo)"
+          spellcheck="false"
+        ></textarea>
+
+        <div class="input-actions">
+          <div class="action-buttons">
+            <button id="btn-analyze" class="btn btn-primary" type="button">
+              <span>Analyze</span>
+              <kbd class="shortcut-kbd">Ctrl ↵</kbd>
+            </button>
+            <button id="btn-clear" class="btn btn-ghost" type="button">Clear</button>
+          </div>
+
+          <!-- Quick Examples -->
+          <div class="quick-examples">
+            <span class="examples-label">Try:</span>
+            <div class="examples-list" id="presets-list">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Loading State -->
+      <div class="loading-bar hidden" id="loading-single">
+        <div class="loading-pulse"></div>
+        <span>Analyzing sentence...</span>
+      </div>
+
+      <!-- Single Result -->
+      <section class="results-container hidden" id="result-single">
+        <!-- Results Card -->
+        <div class="card result-card">
+          <div class="result-top-bar">
+            <div class="score-group">
+              <span class="score-label">Mixing Score:</span>
+              <strong class="score-val" id="single-cmi-val">0%</strong>
+              <span class="score-badge" id="single-cmi-badge">Single language</span>
+            </div>
+            <div class="latency-tag" id="single-latency">0ms</div>
+          </div>
+
+          <!-- Word Pills Canvas -->
+          <div class="tokens-canvas" id="tokens-display">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Clicked Word Inspector -->
+          <div class="word-inspector" id="word-inspector">
+            <div class="inspector-hint" id="insp-hint">Click any word above to inspect details</div>
+            <div class="inspector-content hidden" id="insp-content">
+              <span class="insp-word" id="insp-word">--</span>
+              <span class="insp-tag-badge" id="insp-tag">--</span>
+              <span class="insp-conf" id="insp-conf">Confidence: 0%</span>
+              <span class="insp-role" id="insp-role">--</span>
+            </div>
+          </div>
+
+          <!-- Breakdown counts -->
+          <div class="summary-pills" id="single-breakdown">
+            <div class="summary-pill"><span class="swatch swatch-hi"></span><span id="cnt-hi">Hindi: 0</span></div>
+            <div class="summary-pill"><span class="swatch swatch-en"></span><span id="cnt-en">English: 0</span></div>
+            <div class="summary-pill"><span class="swatch swatch-ne"></span><span id="cnt-ne">Names / Brands: 0</span></div>
+            <div class="summary-pill"><span class="swatch swatch-other"></span><span id="cnt-other">Symbols: 0</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- 2. BATCH ANALYSIS INTERFACE (Hidden when Single is active)           -->
+    <!-- ===================================================================== -->
+    <main id="view-batch" class="mode-view hidden">
+      <!-- Input Card -->
+      <section class="card input-card">
+        <div class="card-header">
+          <div>
+            <label for="batch-input" class="card-label">Enter Multiple Sentences</label>
+            <p class="card-sublabel">Enter one sentence per line (up to 50 sentences)</p>
+          </div>
+          <span class="char-counter" id="batch-counter">0 sentences</span>
+        </div>
+
+        <textarea
+          id="batch-input"
+          class="text-input batch-textarea"
+          rows="6"
+          placeholder="Enter one sentence per line... (e.g.)&#10;bhai ye app bahut slow chal raha hai please check karo&#10;mujhe flight book karni hai Mumbai se Goa tak&#10;Flipkart pe sale kab start hogi ?&#10;ye movie toh bilkul bakwaas thi"
+          spellcheck="false"
+        ></textarea>
+
+        <div class="input-actions">
+          <div class="action-buttons">
+            <button id="btn-analyze-batch" class="btn btn-primary" type="button">
+              <span>Process Batch</span>
+              <kbd class="shortcut-kbd">Ctrl ↵</kbd>
+            </button>
+            <button id="btn-clear-batch" class="btn btn-ghost" type="button">Clear</button>
+          </div>
+
+          <!-- Presets & Upload -->
+          <div class="quick-examples">
+            <span class="examples-label">Sample data:</span>
+            <button type="button" class="preset-chip" id="btn-batch-preset-conv">💬 Casual talk (8)</button>
+            <button type="button" class="preset-chip" id="btn-batch-preset-tech">💻 Tech support (6)</button>
+            <button type="button" class="preset-chip" id="btn-batch-preset-contrast">⚖️ Mixed vs pure (6)</button>
+            <label class="preset-chip upload-chip" for="batch-file-input">
+              📁 Upload file
+              <input type="file" id="batch-file-input" accept=".txt,.csv" style="display: none;" />
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Loading State -->
+      <div class="loading-bar hidden" id="loading-batch">
+        <div class="loading-pulse"></div>
+        <span id="loading-batch-text">Processing batch...</span>
+      </div>
+
+      <!-- Batch Result -->
+      <section class="results-container hidden" id="result-batch">
+        <!-- Summary Strip -->
+        <div class="batch-summary-strip">
+          <div class="card kpi-card">
+            <span class="kpi-label">Total Sentences</span>
+            <span class="kpi-val" id="kpi-sentences">0</span>
+            <span class="kpi-sub" id="kpi-tokens">0 words</span>
+          </div>
+
+          <div class="card kpi-card">
+            <span class="kpi-label">Average Mixing</span>
+            <span class="kpi-val text-blue" id="kpi-avg-cmi">0%</span>
+            <span class="kpi-sub" id="kpi-cmi-level">Single language</span>
+          </div>
+
+          <div class="card kpi-card">
+            <span class="kpi-label">Main Language</span>
+            <span class="kpi-val" id="kpi-dominant-lang">Hindi</span>
+            <span class="kpi-sub" id="kpi-lang-ratio">0 Hindi · 0 English</span>
+          </div>
+
+          <div class="card kpi-card export-card">
+            <span class="kpi-label">Export Data</span>
+            <button id="btn-export-csv" class="btn btn-secondary export-btn" type="button">
+              <span>📥 Download CSV</span>
+            </button>
+            <span class="kpi-sub">Excel compatible</span>
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="card toolbar-card">
+          <div class="search-input-wrap">
+            <input
+              type="text"
+              id="batch-search-input"
+              class="search-input"
+              placeholder="Search sentences..."
+            />
+            <span class="search-clear hidden" id="search-clear-btn">&times;</span>
+          </div>
+
+          <div class="batch-filters">
+            <button class="filter-pill active" data-filter="all">All (<span id="filter-cnt-all">0</span>)</button>
+            <button class="filter-pill" data-filter="mixed">Mixed (<span id="filter-cnt-mixed">0</span>)</button>
+            <button class="filter-pill" data-filter="mono">Single Lang (<span id="filter-cnt-mono">0</span>)</button>
+            <button class="filter-pill" data-filter="hi">Hindi Main (<span id="filter-cnt-hi">0</span>)</button>
+            <button class="filter-pill" data-filter="en">English Main (<span id="filter-cnt-en">0</span>)</button>
+          </div>
+        </div>
+
+        <!-- Sentences List -->
+        <div class="batch-list" id="batch-list-container">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <span>Built with XLM-RoBERTa · LinCE Hinglish Dataset</span>
+      <div class="footer-links">
+        <a href="/docs" target="_blank" class="text-link">API Docs</a>
+        <span class="dot-sep">·</span>
+        <a href="/api/health" target="_blank" class="text-link">Health Check</a>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast-msg"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
